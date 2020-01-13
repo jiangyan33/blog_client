@@ -1,0 +1,15 @@
+<header class="archive-header">
+    <h1>{{title}}</h1>
+</header>
+<article class="excerpt excerpt-nothumbnail" *ngFor="let item of articleList">
+    <header>
+        <a class="label label-important">git<i class="label-arrow"></i></a>
+        <h2><a id="p" title="">{{item.name}}</a></h2>
+    </header>
+    <p>
+        <span class="muted"><i class="icon-user icon12"></i> <a>jiangyan33</a></span>
+        <span class="muted"><i class="icon-time icon12"></i> {{item.update_date}}</span>
+        <span class="muted"><i class="icon-eye-open icon12"></i>{{item.count}}</span>
+    </p>
+    <p class="note">{{item.content}} </p>
+</article>
