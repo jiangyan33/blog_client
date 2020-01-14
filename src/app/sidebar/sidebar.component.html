@@ -2,16 +2,19 @@
     <div class="widget widget_recent_entries">
         <h3 class="widget_tit">近期文章</h3>
         <ul id="left_new_article">
+            <li *ngFor="let item of articleList"><a id="p">{{item.name}}</a></li>
         </ul>
     </div>
     <div class="widget widget_archive">
         <h3 class="widget_tit">文章归档</h3>
         <ul id="date_List">
+            <li *ngFor="let item of dateList"><a>{{item.format}}</a></li>
         </ul>
     </div>
     <div class="widget widget_categories">
         <h3 class="widget_tit">分类目录</h3>
         <ul id="left_cagetoryList">
+            <li class="cat-item cat-item-4" *ngFor="let item of categoryList"><a>{{item.name}}</a></li>
         </ul>
     </div>
     <div class="widget widget_calendar">

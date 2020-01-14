@@ -18,4 +18,9 @@ export class RequestService {
   getArticleList(options) {
     return this.http.get(`${this.baseUrl}article/articles`, { params: options });
   }
+
+  // 获取文章归档信息
+  getDateList() {
+    return this.http.get(`${this.baseUrl}article/date`);
+  }
 }
