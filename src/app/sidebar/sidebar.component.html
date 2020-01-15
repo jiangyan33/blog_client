@@ -8,13 +8,17 @@
     <div class="widget widget_archive">
         <h3 class="widget_tit">文章归档</h3>
         <ul id="date_List">
-            <li *ngFor="let item of dateList"><a>{{item.format}}</a></li>
+            <li *ngFor="let item of dateList">
+                <a routerLink="/home" [queryParams]="{monthDate:item.date,value:item.format}">{{item.format}}</a>
+            </li>
         </ul>
     </div>
     <div class="widget widget_categories">
         <h3 class="widget_tit">分类目录</h3>
         <ul id="left_cagetoryList">
-            <li class="cat-item cat-item-4" *ngFor="let item of categoryList"><a>{{item.name}}</a></li>
+            <li class="cat-item cat-item-4" *ngFor="let item of categoryList">
+                <a routerLink="/home" [queryParams]="{categoryId:item.id,value:item.name}">{{item.name}}</a>
+            </li>
         </ul>
     </div>
     <div class="widget widget_calendar">

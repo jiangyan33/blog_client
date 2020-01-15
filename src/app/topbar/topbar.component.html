@@ -1,17 +1,21 @@
 <div class="navbar">
     <div class="logo"><a href="/" title="小老板-">小老板</a></div>
     <ul class="nav">
+        <li id="menu-item-50"
+            class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-50">
+            <a routerLink="/home">首页</a>
+        </li>
         <li id="menu-item-50" *ngFor="let item of categoryList"
             class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-50">
-            <a href="/">{{item.name}}</a>
+            <a routerLink="/home" [queryParams]="{categoryId:item.id,value:item.name}">{{item.name}}</a>
         </li>
     </ul>
     <div class="screen-mini"><button data-type="screen-nav" class="btn btn-inverse screen-nav"><i
                 class="icon-tasks icon-white"></i></button></div>
     <div class="menu pull-right">
-        <form class="dropdown search-form">
-            <input id='key' class="search-input" name="s" type="text" placeholder="输入关键字搜索" x-webkit-speech="">
-            <input id='search' class="btn btn-success search-submit" type="button" value="搜索">
+        <form class="dropdown search-form" [formGroup]="searchContent" (ngSubmit)="onSubmit()">
+            <input class="search-input" type="text" placeholder="输入关键字搜索" x-webkit-speech="" formControlName="value">
+            <input class="btn btn-success search-submit" type="button" value="搜索">
             <ul class="dropdown-menu search-suggest"></ul>
         </form>
         <div class="btn-group pull-left">

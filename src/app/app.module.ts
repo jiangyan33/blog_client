@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { TopbarComponent } from './topbar/topbar.component';
 import { ArticleListComponent } from './article-list/article-list.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,8 @@ import { ArticleListComponent } from './article-list/article-list.component';
   ],
   imports: [
     BrowserModule,
+    // FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
     AppRoutingModule
   ],
