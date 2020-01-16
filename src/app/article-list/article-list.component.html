@@ -1,19 +1,25 @@
-<header class="archive-header">
-    <h1>{{title}}</h1>
-    <p *ngIf="title.indexOf('没有找到')>=0" class="muted">给您推荐以下内容：</p>
-</header>
-<article class="excerpt excerpt-nothumbnail" *ngFor="let item of articleList">
-    <header>
-        <a class="label label-important">{{item.category_name}}<i class="label-arrow"></i></a>
-        <h2><a id="p" title="">{{item.name}}</a></h2>
+<div class="content" *ngIf="pageResult">
+    <header class="archive-header">
+        <h1>{{title}}</h1>
+        <p *ngIf="title.indexOf('没有找到')>=0" class="muted">给您推荐以下内容：</p>
     </header>
-    <p>
-        <span class="muted"><i class="icon-user icon12"></i>
-            <a routerLink="/home"
-                [queryParams]="{authorId:item.t_author_id,value:item.author_name}">{{item.author_name}}</a>
-        </span>
-        <span class="muted"><i class="icon-time icon12"></i> {{item.update_date}}</span>
-        <span class="muted"><i class="icon-eye-open icon12"></i>{{item.count}}</span>
-    </p>
-    <p class="note">{{item.content}} </p>
-</article>
+    <article class="excerpt excerpt-nothumbnail" *ngFor="let item of pageResult.data">
+        <header>
+            <a class="label label-important">{{item.category_name}}<i class="label-arrow"></i></a>
+            <h2><a id="p" title="">{{item.name}}</a></h2>
+        </header>
+        <p>
+            <span class="muted"><i class="icon-user icon12"></i>
+                <a routerLink="/home"
+                    [queryParams]="{authorId:item.t_author_id,value:item.author_name}">{{item.author_name}}</a>
+            </span>
+            <span class="muted"><i class="icon-time icon12"></i> {{item.update_date}}</span>
+            <span class="muted"><i class="icon-eye-open icon12"></i>{{item.count}}</span>
+        </p>
+        <p class="note">{{item.content}} </p>
+    </article>
+    <div *ngIf="pageResult.pages>1" class="pagination">
+        <ul [innerHtml]='pageCode'>
+        </ul>
+    </div>
+</div>

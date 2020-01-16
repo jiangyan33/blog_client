@@ -18,8 +18,8 @@ import { ReactiveFormsModule } from '@angular/forms';
   imports: [
     BrowserModule,
     // FormsModule,
-    ReactiveFormsModule,
     HttpClientModule,
+    ReactiveFormsModule,
     AppRoutingModule
   ],
   providers: [],

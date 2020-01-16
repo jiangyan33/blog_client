@@ -7,19 +7,16 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./article-list.component.css']
 })
 export class ArticleListComponent implements OnInit {
-
-  private articleList: Array<Object>;
   private title: String;
+  private pageResult: Object;
+  private pageNum: number = 1;
+  private PageSize: number = 10;
+  private pageCode: string; // 分页标签
   constructor(private RequestService: RequestService, private route: ActivatedRoute) {
   }
 
   ngOnInit() {
     this.route.queryParamMap.subscribe(params => {
-      // let categoryId = params.get('categoryId');
-      // let date=params.get('tagId');
-      // let date=params.get('authorId');
-      // let date=params.get('monthDate');
-      // let date=params.get('searchKey');
       let options = { ...params['params'] };
       if (options['categoryId']) {
         this.title = `【${options['value']}】分类下的内容`;
@@ -30,7 +27,8 @@ export class ArticleListComponent implements OnInit {
       } else if (options['monthDate']) {
         this.title = `【${options['value']}】的内容`;
       } else if (options['searchKey']) {
-        this.title = `有关【${options['value']}】的内容`;
+        this.title = `有关【${options['searchKey']}】的内容`;
+        options['searchKey'] = options['searchKey'].toUpperCase();
       } else {
         this.title = "最新发布";
       }
@@ -41,15 +39,90 @@ export class ArticleListComponent implements OnInit {
 
   public searchArticle(options) {
     // 初始化文章列表
-    this.RequestService.getArticleList({ pageNum: 1, pageSize: 10, ...options }).subscribe(result => {
+    this.RequestService.getArticleList({ pageNum: this.pageNum, pageSize: this.PageSize, ...options }).subscribe(result => {
       if (result['success'] === 1) {
-        this.articleList = result['message']['data'];
-        if (this.articleList.length === 0) {
+        this.pageResult = result['message'];
+        // 当最大页大于1时，显示分页效果
+        if (this.pageResult['pages'] > 1)
+          this.pageCode = this.page();
+        debugger;
+        if (this.pageResult['data'].length === 0) {
           // 没有获取到数据
           this.title = '没有找到' + this.title;
           this.searchArticle({});
         }
       }
     });
+  }
+
+  // 分页逻辑
+  public page() {
+    let prev = '';
+    let next = '';
+    if (this.pageNum !== 1) {
+      prev = `<li class="prev-page"><a href="/home?pageNum=${this.pageNum - 1}">上一页</a></li>`
+    }
+    if (this.pageNum !== this.pageResult['pages']) {
+      next = `<li class="next-page"><a href="/home?pageNum=${this.pageNum + 1}">下一页</a></li>`
+    }
+    let active = `<li class="active"><span>${this.pageNum}</span></li>`; // 当前页
+    //当前页前
+    let activePre = '';
+    //当前页后
+    let activeNext = '';
+    //省略号
+    let misc = '<li><span> ... </span></li>';
+    // 当前页小于等于6且最大页小于等于10
+    if (this.pageNum <= 6 && this.pageResult['pages'] <= 10) {
+      for (let i = 1; i <= this.pageNum; i++) {
+        if (this.pageNum === i) {
+          activePre += active;
+        } else {
+          activePre += `<li><a href="/home?pageNum=${i}">${i}</a></li>`;
+        }
+      }
+      for (let i = this.pageNum + 1; i <= this.pageResult['pages']; i++) {
+        activeNext += `<li><a href="/home?pageNum=${i}">${i}</a></li>`;
+      }
+    } else if (this.pageNum > 6 && this.pageResult['pages'] <= 10) {
+      activePre += `<li><a href="/home?pageNum=${1}">1</a></li>${misc}`;
+      for (let i = this.pageNum - 4; i <= this.pageNum; i++) {
+        if (this.pageNum === i) {
+          activePre += active;
+        } else {
+          activePre += `<li><a href="/home?pageNum=${i}">${i}</a></li>`;
+        }
+      }
+      for (let i = this.pageNum + 1; i <= this.pageResult['pages']; i++) {
+        activeNext += `<li><a href="/home?pageNum=${i}">${i}</a></li>`;
+      }
+    } else if (this.pageNum <= 6 && this.pageResult['pages'] > 10) {
+      for (let i = 1; i <= this.pageNum; i++) {
+        if (this.pageNum === i) {
+          activePre += active;
+        } else {
+          activePre += `<li><a href="/home?pageNum=${i}">${i}</a></li>`;
+        }
+      }
+      for (let i = this.pageNum + 1; i <= this.pageNum + 4; i++) {
+        activeNext += `<li><a href="/home?pageNum=${i}">${i}</a></li>`;
+      }
+      activeNext += misc;
+    } else {
+      activePre += `<li><a href="/home?pageNum=1">1</a></li>${misc}`;
+      for (let i = this.pageNum - 4; i <= this.pageNum; i++) {
+        if (this.pageNum === i) {
+          activePre += active;
+        } else {
+          activePre += `<li><a href="/home?pageNum=${i}">${i}</a></li>`;
+        }
+      }
+      let length = this.pageNum + 4 < this.pageResult['pages'] ? this.pageNum + 4 : this.pageResult['pages'];
+      for (let i = this.pageNum + 1; i <= length; i++) {
+        activePre += `<li><a href="/home?pageNum=${i}">${i}</a></li>`;
+      }
+      this.pageNum + 4 < this.pageResult['pages'] ? activeNext += misc : '';
+    }
+    return prev + '\n' + activePre + '\n' + activeNext + '\n' + next;
   }
 }
