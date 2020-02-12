@@ -23,4 +23,9 @@ export class RequestService {
   getDateList() {
     return this.http.get(`${this.baseUrl}article/date`);
   }
+
+  // 获取文章详情
+  getArticleInfo(id: string) {
+    return this.http.get(`${this.baseUrl}article/article`, { params: { id } });
+  }
 }

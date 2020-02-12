@@ -1,0 +1,113 @@
+<!-- <div class="breadcrumbs">你的位置：<a href="/">业余草</a> <small>></small> <a id='search' value='cat=${message['
+        article']['cat_id']}'>${message['article']['name']}</a>
+    <small>></small> <span class="muted">${message['article']['title']}</span></div>
+
+<header class="article-header">
+    <h1 class="article-title"><a>${message['article']['title']}</a></h1>
+    <div class="meta">
+        <span class="muted"><a id='search' value='cat=${message[' article']['cat_id']}'><i
+                    class="icon-list-alt icon12"></i>
+                ${message['article']['name']}</a></span> <span class="muted"><i class="icon-user icon12"></i> <a
+                id='search' value='author=${message['
+                article']['author_id']}'>${message['article']['author']}</a></span>
+        <time class="muted"><i class="ico icon-time icon12"></i>${message['article']['updatetime']}</time>
+        <span class="muted"><i class="ico icon-eye-open icon12"></i>${message['article']['count']}</span>
+    </div>
+</header>
+
+<article class="article-content">${message['article']['content']}</article>
+
+<a id='search' value='tag=${tag[' id']}' rel="tag">${tag['name']}</a>
+
+<footer class="article-footer">
+    <div class="article-tags">继续浏览有关${tags}的文章</div>
+    <div class="share">版权声明：本文为博主原创文章，禁止任何转载。</div>
+</footer>
+
+<span class="article-nav-prev">上一篇 <a id='p' value='${message[' pre']['id']}'
+        rel="prev">${message['pre']['title']}</a></span>
+
+<span class="article-nav-next"><a id='p' value='${message[' next']['id']}' rel="next">${message['next']['title']}</a>
+    下一篇</span>
+
+<nav class="article-nav">${pre_span}${nex_span}</nav>
+
+<li><a id='p' value='${item[' id']}'>${item['title']}</a></li>
+
+<div class="relates">
+    <h3>相关文章推荐</h3>
+    <ul>${link}</ul>
+</div> -->
+
+
+<div class="content" *ngIf="article">
+    <!-- <img src="https://gitee.com/xmtblog/img/raw/master/fengxiang.png"> 图片广告位置 -->
+    <div class="breadcrumbs">你的位置：
+        <a routerLink="/home">小老板</a><small>&gt;</small>
+        <a routerLink="/home"
+            [queryParams]="{categoryId:article.t_category_id,value:article.t_category_name}">{{article.t_category_name}}</a><small>&gt;</small>
+        <span class="muted">{{article.name}}</span>
+    </div>
+
+    <header class="article-header">
+        <h1 class="article-title">{{article.name}}</h1>
+        <div class="meta">
+            <span class="muted">
+                <a routerLink="/home" [queryParams]="{categoryId:article.t_category_id,value:article.t_category_name}">
+                    <i class="icon-list-alt icon12"></i>{{article.t_category_name}}</a>
+            </span>
+            <span class="muted"><i class="icon-user icon12"></i>
+                <a routerLink="/home"
+                    [queryParams]="{authorId:article.t_author_id,value:article.t_author_name}">{{article.t_author_name}}</a>
+            </span>
+            <time class="muted"><i class="ico icon-time icon12"></i>{{article.update_date}}</time>
+            <span class="muted"><i class="ico icon-eye-open icon12"></i> {{article.count}}浏览</span>
+        </div>
+    </header>
+
+    <!-- 公告栏 -->
+    <!-- <div class="banner banner-post">
+        <script async="" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script> -->
+    <!-- 自适应1 -->
+    <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3696342656433191"
+            data-ad-slot="1385279461" data-ad-format="auto" data-full-width-responsive="true"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div> -->
+
+    <article class="article-content" [innerHtml]='article.content'>
+
+        <!-- 文章结尾信息 -->
+        <!-- <p><img src="https://raw.githubusercontent.com/xmt1139057136/xttblog/master/8fa5dcfcgy1g4em3rzar5j20ib089ae0.jpg"
+                alt="业余草公众号"></p>
+        <p>最后，欢迎关注我的个人微信公众号：业余草（yyucao）！<b>可加作者微信号1：<font color="red">xmtxtt</font>(5000人已满)，微信号2:<font color="red">
+                    codedq</font>(5000人已满)，微信号3：<font color="red">xttblog</font>
+                (超2800)。备注：“xttblog”，添加博主微信拉你进微信群。备注错误不会同意好友申请。</b>再次感谢您的关注！后续有精彩内容会第一时间发给您！原创文章投稿请发送至532009913@qq.com邮箱。商务合作也可添加作者微信进行联系！
+        </p>
+        <p>本文原文出处：<a href="https://www.xttblog.com">业余草</a>： » <a href="https://www.xttblog.com/?p=4725">Centos7 下查看
+                python 版本的坑</a></p> -->
+
+    </article>
+    <footer class="article-footer" *ngIf="article.tags.length">
+        <div class="article-tags">继续浏览有关
+            <a *ngFor="let item of article.tags" routerLink="/home" [queryParams]="{tagId:item.id,value:item.name}"
+                rel="tag">{{item.name}}</a>
+            的文章</div>
+        <div class="share">版权声明：本文为博主原创文章，禁止任何转载。</div>
+    </footer>
+
+    <nav class="article-nav">
+        <span *ngIf="pre" class="article-nav-prev">上一篇 <a routerLink="/article_info" [queryParams]="{id:pre.id}"
+                rel="prev">{{pre.name}}</a></span>
+        <span *ngIf="next" class="article-nav-next"><a routerLink="/article_info" [queryParams]="{id:next.id}"
+                rel="next">{{next.name}}</a> 下一篇</span>
+    </nav>
+    <div class="relates" *ngIf="link.length">
+        <h3>相关文章推荐</h3>
+        <ul>
+            <li *ngFor="let item of link"><a routerLink="/article_info" [queryParams]="{id:item.id}">{{item.name}}</a>
+            </li>
+        </ul>
+    </div>
+</div>

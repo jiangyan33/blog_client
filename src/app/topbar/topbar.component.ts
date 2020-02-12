@@ -28,7 +28,6 @@ export class TopbarComponent implements OnInit {
 
   onSubmit() {
     let searchKey = this.searchKey.value.searchKey;
-    debugger;
     if (searchKey) {
       this.router.navigate(['/home'], { queryParams: { searchKey } });
     }

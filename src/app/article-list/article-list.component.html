@@ -6,7 +6,7 @@
     <article class="excerpt excerpt-nothumbnail" *ngFor="let item of pageResult.data">
         <header>
             <a class="label label-important">{{item.category_name}}<i class="label-arrow"></i></a>
-            <h2><a id="p" title="">{{item.name}}</a></h2>
+            <h2><a routerLink="/article_info" [queryParams]="{id:item.id}" title="">{{item.name}}</a></h2>
         </header>
         <p>
             <span class="muted"><i class="icon-user icon12"></i>

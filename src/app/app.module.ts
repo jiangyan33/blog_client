@@ -7,13 +7,15 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { TopbarComponent } from './topbar/topbar.component';
 import { ArticleListComponent } from './article-list/article-list.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ArticleInfoComponent } from './article-info/article-info.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SidebarComponent,
     TopbarComponent,
-    ArticleListComponent
+    ArticleListComponent,
+    ArticleInfoComponent
   ],
   imports: [
     BrowserModule,

@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ArticleListComponent } from './article-list/article-list.component';
+import { ArticleInfoComponent } from './article-info/article-info.component';
 
 
 const routes: Routes = [
   { path: 'home', component: ArticleListComponent },
+  { path: 'article_info', component: ArticleInfoComponent },
   // { path: 'add_book', component: AddBookComponent },
   // { path: 'book_list', component: BookListComponent },
   // { path: 'file_import', component: FileImportComponent },

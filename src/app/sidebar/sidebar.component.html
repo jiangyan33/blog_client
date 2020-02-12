@@ -2,7 +2,9 @@
     <div class="widget widget_recent_entries">
         <h3 class="widget_tit">近期文章</h3>
         <ul id="left_new_article">
-            <li *ngFor="let item of articleList"><a id="p">{{item.name}}</a></li>
+            <li *ngFor="let item of articleList">
+                <a routerLink="/article_info" [queryParams]="{id:item.id}">{{item.name}}</a>
+            </li>
         </ul>
     </div>
     <div class="widget widget_archive">
@@ -21,7 +23,8 @@
             </li>
         </ul>
     </div>
-    <div class="widget widget_calendar">
+    <!-- todo:暂时不做 -->
+    <div class="widget widget_calendar" *ngIf="calendarInfo">
         <h3 class="widget_tit">日历</h3>
         <div id="calendar_wrap" class="calendar_wrap">
         </div>

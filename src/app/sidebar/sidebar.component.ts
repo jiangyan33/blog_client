@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RequestService } from '../request.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sidebar',
@@ -11,9 +12,12 @@ export class SidebarComponent implements OnInit {
   private categoryList: Array<Object>; // 分类信息
   private articleList: Array<Object>; // 最新文章信息
   private dateList: Array<Object>; // 归档信息
-  constructor(private requestService: RequestService) { }
+  private calendarInfo: Array<Object>; // 日历信息
+  private routeName: String;
+  constructor(private requestService: RequestService, private router: Router) { }
 
   ngOnInit() {
+    console.log(this.router.url);
     this.requestService.getCategoryList().subscribe(result => {
       if (result['success'] === 1) {
         this.categoryList = result['message'];

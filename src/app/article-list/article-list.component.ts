@@ -12,11 +12,12 @@ export class ArticleListComponent implements OnInit {
   private pageNum: number = 1;
   private PageSize: number = 10;
   private pageCode: string; // 分页标签
-  constructor(private RequestService: RequestService, private route: ActivatedRoute) {
+  constructor(private requestService: RequestService, private route: ActivatedRoute) {
   }
 
   ngOnInit() {
     this.route.queryParamMap.subscribe(params => {
+      debugger;
       let options = { ...params['params'] };
       if (options['categoryId']) {
         this.title = `【${options['value']}】分类下的内容`;
@@ -39,13 +40,12 @@ export class ArticleListComponent implements OnInit {
 
   public searchArticle(options) {
     // 初始化文章列表
-    this.RequestService.getArticleList({ pageNum: this.pageNum, pageSize: this.PageSize, ...options }).subscribe(result => {
+    this.requestService.getArticleList({ pageNum: this.pageNum, pageSize: this.PageSize, ...options }).subscribe(result => {
       if (result['success'] === 1) {
         this.pageResult = result['message'];
         // 当最大页大于1时，显示分页效果
         if (this.pageResult['pages'] > 1)
           this.pageCode = this.page();
-        debugger;
         if (this.pageResult['data'].length === 0) {
           // 没有获取到数据
           this.title = '没有找到' + this.title;
