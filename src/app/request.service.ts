@@ -7,7 +7,7 @@ import { HttpClient } from "@angular/common/http";
 export class RequestService {
   private baseUrl: String;
   constructor(private messageService: MessageService, private http: HttpClient) {
-    this.baseUrl = this.messageService.get("baseUrl");
+    this.baseUrl = this.messageService.baseUrl;
   }
   // 获取分类列表
   getCategoryList() {

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { RequestService } from "../request.service";
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
+import { HttpClient } from "@angular/common/http";
 import { Router } from '@angular/router';
 @Component({
   selector: 'app-topbar',
@@ -8,28 +8,29 @@ import { Router } from '@angular/router';
   styleUrls: ['./topbar.component.css']
 })
 export class TopbarComponent implements OnInit {
-  private categoryList: Array<Object>;
-  private searchKey: FormGroup;
-  constructor(private requestService: RequestService, private formBuilder: FormBuilder, private router: Router) {
-  }
+  formData = new FormGroup({
+    searchKey: new FormControl('')
+  });
+  categoryList: any;
+  constructor(
+    private http: HttpClient,
+    private router: Router
+  ) { }
 
   ngOnInit() {
-    this.searchKey = this.formBuilder.group({ searchKey: undefined });
-    this.requestService.getCategoryList().subscribe(result => {
-      if (result['success'] === 1) {
-        this.categoryList = result['message'];
-
-
+    this.http.get('category/categoryList').toPromise().then((data: any) => {
+      if (data.success === 1) {
+        this.categoryList = data.message;
         // 上面导航栏最多显示5个
         this.categoryList.length = 5;
       }
     });
   }
 
-  onSubmit() {
-    let searchKey = this.searchKey.value.searchKey;
-    if (searchKey) {
-      this.router.navigate(['/home'], { queryParams: { searchKey } });
+  search() {
+    let searchKey = this.formData.value;
+    if (searchKey.trim()) {
+      this.router.navigate(['/articles'], { queryParams: { searchKey } });
     }
   }
 

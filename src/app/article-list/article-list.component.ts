@@ -1,35 +1,37 @@
 import { Component, OnInit } from '@angular/core';
-import { RequestService } from "../request.service";
 import { ActivatedRoute } from '@angular/router';
+import { HttpClient } from "@angular/common/http";
 @Component({
   selector: 'app-article-list',
   templateUrl: './article-list.component.html',
   styleUrls: ['./article-list.component.css']
 })
 export class ArticleListComponent implements OnInit {
-  private title: String;
-  private pageResult: Object;
-  private pageNum: number = 1;
-  private PageSize: number = 10;
-  private pageCode: string; // 分页标签
-  constructor(private requestService: RequestService, private route: ActivatedRoute) {
-  }
+  title: String; // 查询对应标题
+  pages: number; // 总页数
+  data: any; // 数据
+  pageNum: number = 1;
+  PageSize: number = 10;
+  pageCode: string; // 分页标签
+  constructor(
+    private http: HttpClient,
+    private route: ActivatedRoute
+  ) { }
 
   ngOnInit() {
-    this.route.queryParamMap.subscribe(params => {
-      debugger;
-      let options = { ...params['params'] };
-      if (options['categoryId']) {
-        this.title = `【${options['value']}】分类下的内容`;
-      } else if (options['tagId']) {
-        this.title = `【${options['value']}】标签下的内容`;
-      } else if (options['authorId']) {
-        this.title = `【${options['value']}】的文章`;
-      } else if (options['monthDate']) {
-        this.title = `【${options['value']}】的内容`;
-      } else if (options['searchKey']) {
-        this.title = `有关【${options['searchKey']}】的内容`;
-        options['searchKey'] = options['searchKey'].toUpperCase();
+    this.route.queryParamMap.subscribe((params: any) => {
+      let options = { ...params.params };
+      if (options.categoryId) {
+        this.title = `【${options.value}】分类下的内容`;
+      } else if (options.tagId) {
+        this.title = `【${options.value}】标签下的内容`;
+      } else if (options.authorId) {
+        this.title = `【${options.value}】的文章`;
+      } else if (options.monthDate) {
+        this.title = `【${options.value}】的内容`;
+      } else if (options.searchKey) {
+        this.title = `有关【${options.searchKey}】的内容`;
+        options.searchKey = options.searchKey.toUpperCase();
       } else {
         this.title = "最新发布";
       }
@@ -40,19 +42,23 @@ export class ArticleListComponent implements OnInit {
 
   public searchArticle(options) {
     // 初始化文章列表
-    this.requestService.getArticleList({ pageNum: this.pageNum, pageSize: this.PageSize, ...options }).subscribe(result => {
-      if (result['success'] === 1) {
-        this.pageResult = result['message'];
-        // 当最大页大于1时，显示分页效果
-        if (this.pageResult['pages'] > 1)
-          this.pageCode = this.page();
-        if (this.pageResult['data'].length === 0) {
-          // 没有获取到数据
-          this.title = '没有找到' + this.title;
-          this.searchArticle({});
+    this.http.get('article/articles', { pageNum: this.pageNum, pageSize: this.PageSize, ...options })
+      .toPromise().then((data: any) => {
+        if (data.success === 1) {
+          this.data = data.message.data;
+          this.pages = data.message.pages;
+          if (this.pages > 1) {
+            this.pageCode = this.page();
+          }
+          if (this.data.length === 0) {
+            this.title = '没有找到' + this.title;
+            this.searchArticle({});
+          }
         }
-      }
-    });
+      }).catch(err => {
+        console.log(err);
+      });
+
   }
 
   // 分页逻辑
@@ -62,7 +68,7 @@ export class ArticleListComponent implements OnInit {
     if (this.pageNum !== 1) {
       prev = `<li class="prev-page"><a href="/home?pageNum=${this.pageNum - 1}">上一页</a></li>`
     }
-    if (this.pageNum !== this.pageResult['pages']) {
+    if (this.pageNum !== this.pages) {
       next = `<li class="next-page"><a href="/home?pageNum=${this.pageNum + 1}">下一页</a></li>`
     }
     let active = `<li class="active"><span>${this.pageNum}</span></li>`; // 当前页
@@ -73,7 +79,7 @@ export class ArticleListComponent implements OnInit {
     //省略号
     let misc = '<li><span> ... </span></li>';
     // 当前页小于等于6且最大页小于等于10
-    if (this.pageNum <= 6 && this.pageResult['pages'] <= 10) {
+    if (this.pageNum <= 6 && this.pages <= 10) {
       for (let i = 1; i <= this.pageNum; i++) {
         if (this.pageNum === i) {
           activePre += active;
@@ -81,10 +87,10 @@ export class ArticleListComponent implements OnInit {
           activePre += `<li><a href="/home?pageNum=${i}">${i}</a></li>`;
         }
       }
-      for (let i = this.pageNum + 1; i <= this.pageResult['pages']; i++) {
+      for (let i = this.pageNum + 1; i <= this.pages; i++) {
         activeNext += `<li><a href="/home?pageNum=${i}">${i}</a></li>`;
       }
-    } else if (this.pageNum > 6 && this.pageResult['pages'] <= 10) {
+    } else if (this.pageNum > 6 && this.pages <= 10) {
       activePre += `<li><a href="/home?pageNum=${1}">1</a></li>${misc}`;
       for (let i = this.pageNum - 4; i <= this.pageNum; i++) {
         if (this.pageNum === i) {
@@ -93,10 +99,10 @@ export class ArticleListComponent implements OnInit {
           activePre += `<li><a href="/home?pageNum=${i}">${i}</a></li>`;
         }
       }
-      for (let i = this.pageNum + 1; i <= this.pageResult['pages']; i++) {
+      for (let i = this.pageNum + 1; i <= this.pages; i++) {
         activeNext += `<li><a href="/home?pageNum=${i}">${i}</a></li>`;
       }
-    } else if (this.pageNum <= 6 && this.pageResult['pages'] > 10) {
+    } else if (this.pageNum <= 6 && this.pages > 10) {
       for (let i = 1; i <= this.pageNum; i++) {
         if (this.pageNum === i) {
           activePre += active;
@@ -117,11 +123,11 @@ export class ArticleListComponent implements OnInit {
           activePre += `<li><a href="/home?pageNum=${i}">${i}</a></li>`;
         }
       }
-      let length = this.pageNum + 4 < this.pageResult['pages'] ? this.pageNum + 4 : this.pageResult['pages'];
+      let length = this.pageNum + 4 < this.pages ? this.pageNum + 4 : this.pages;
       for (let i = this.pageNum + 1; i <= length; i++) {
         activePre += `<li><a href="/home?pageNum=${i}">${i}</a></li>`;
       }
-      this.pageNum + 4 < this.pageResult['pages'] ? activeNext += misc : '';
+      this.pageNum + 4 < this.pages ? activeNext += misc : '';
     }
     return prev + '\n' + activePre + '\n' + activeNext + '\n' + next;
   }

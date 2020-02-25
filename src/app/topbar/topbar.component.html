@@ -13,7 +13,7 @@
     <div class="screen-mini"><button data-type="screen-nav" class="btn btn-inverse screen-nav"><i
                 class="icon-tasks icon-white"></i></button></div>
     <div class="menu pull-right">
-        <form class="dropdown search-form" [formGroup]="searchKey" (ngSubmit)="onSubmit()">
+        <form class="dropdown search-form" [formGroup]="searchKey" (ngSubmit)="search()">
             <input class="search-input" type="text" placeholder="输入关键字搜索" x-webkit-speech=""
                 formControlName="searchKey">
             <input class="btn btn-success search-submit" type="submit" value="搜索">

@@ -1,1 +1,30 @@
-<p>layout works!</p>
+<div class="navbar-wrap">
+    <app-topbar></app-topbar>
+</div>
+<header class="header">
+    <!-- 数据绑定{{}}
+      双向数据绑定
+    -->
+    <!-- <div class="speedbar">
+    </div> -->
+</header>
+<section class="container">
+    <div class="content-wrap">
+        <router-outlet></router-outlet>
+    </div>
+    <app-sidebar></app-sidebar>
+</section>
+<footer class="footer">
+    <div class="footer-inner">
+        <div class="copyright pull-left">
+            Copyright © 2018 Design by jiangyan,鄂ICP备14009759号-1 <a href="/">小老板</a>
+            | <a href="#" rel="nofollow" target="_blank">网站地图</a>
+            | <a href="#" rel="nofollow" target="_blank">联系我们</a>
+            | <a href="#" target="_blank">搜索小老板</a>
+            | <a href="#" target="_blank">SpringCloud</a>
+            | <a href="#" target="_blank">WebFlux</a>
+        </div>
+        <div class="trackcode pull-right">
+        </div>
+    </div>
+</footer>
