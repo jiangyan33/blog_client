@@ -22,6 +22,8 @@ export class ArticleInfoComponent implements OnInit {
       // 初始化文章列表
       this.RequestService.getArticleInfo(id).subscribe(result => {
         if (result['success'] === 1) {
+          // this.article = result["message"]["article"];
+          result["message"]["article"]["content"]=``
           this.article = result["message"]["article"];
           this.link = result["message"]["link"];
           this.next = result["message"]["next"];

@@ -8,15 +8,19 @@ import { TopbarComponent } from './topbar/topbar.component';
 import { ArticleListComponent } from './article-list/article-list.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ArticleInfoComponent } from './article-info/article-info.component';
+import { LayoutComponent } from './layout/layout.component';
 
 @NgModule({
+  // 声明该模块使用的组件
   declarations: [
     AppComponent,
     SidebarComponent,
     TopbarComponent,
     ArticleListComponent,
-    ArticleInfoComponent
+    ArticleInfoComponent,
+    LayoutComponent
   ],
+  // 该模块的依赖模块
   imports: [
     BrowserModule,
     // FormsModule,
@@ -25,6 +29,6 @@ import { ArticleInfoComponent } from './article-info/article-info.component';
     AppRoutingModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent] // 该模块的启动组件
 })
 export class AppModule { }
