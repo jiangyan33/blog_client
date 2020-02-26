@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { RequestService } from "../request.service";
 import { ActivatedRoute } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-article-info',
@@ -9,27 +9,27 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ArticleInfoComponent implements OnInit {
 
-  private article: Object;
-  private link: Array<Object>;
-  private next: object;
-  private pre: object;
+  article: any;
+  link: any;
+  next: any;
+  pre: any;
 
-  constructor(private RequestService: RequestService, private route: ActivatedRoute) { }
+  constructor(private http: HttpClient, private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.route.queryParamMap.subscribe(params => {
       const id = params['params']["id"];
       // 初始化文章列表
-      this.RequestService.getArticleInfo(id).subscribe(result => {
-        if (result['success'] === 1) {
-          // this.article = result["message"]["article"];
-          result["message"]["article"]["content"]=``
-          this.article = result["message"]["article"];
-          this.link = result["message"]["link"];
-          this.next = result["message"]["next"];
-          this.pre = result["message"]["pre"];
+      this.http.get("article/article", { params: { id } }).toPromise().then((data: any) => {
+        if (data.success === 1) {
+          this.article = data.message.article;
+          this.link = data.message.link;
+          this.next = data.message.next;
+          this.pre = data.message.pre;
         }
-      });
+      }).catch(e => {
+        console.log(e);
+      })
     });
   }
 
