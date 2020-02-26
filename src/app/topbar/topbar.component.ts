@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { HttpClient } from "@angular/common/http";
 import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-topbar',
   templateUrl: './topbar.component.html',
@@ -13,24 +13,18 @@ export class TopbarComponent implements OnInit {
   });
   categoryList: any;
   constructor(
-    private http: HttpClient,
     private router: Router
   ) { }
 
   ngOnInit() {
-    this.http.get('category/categoryList').toPromise().then((data: any) => {
-      if (data.success === 1) {
-        this.categoryList = data.message;
-        // 上面导航栏最多显示5个
-        this.categoryList.length = 5;
-      }
-    });
+    this.categoryList = JSON.parse(window.localStorage.getItem("categoryList"));
+    this.categoryList.length = 5;
   }
 
   search() {
-    let searchKey = this.formData.value;
-    if (searchKey.trim()) {
-      this.router.navigate(['/articles'], { queryParams: { searchKey } });
+    let formData = this.formData.value;
+    if (formData.searchKey.trim()) {
+      this.router.navigate(['/articles'], { queryParams: formData });
     }
   }
 

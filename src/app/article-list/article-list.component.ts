@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from "@angular/common/http";
+import { MessageService } from '../message.service';
 @Component({
   selector: 'app-article-list',
   templateUrl: './article-list.component.html',
@@ -15,7 +16,8 @@ export class ArticleListComponent implements OnInit {
   pageCode: string; // 分页标签
   constructor(
     private http: HttpClient,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private message: MessageService
   ) { }
 
   ngOnInit() {
@@ -42,7 +44,7 @@ export class ArticleListComponent implements OnInit {
 
   public searchArticle(options) {
     // 初始化文章列表
-    this.http.get('article/articles', { pageNum: this.pageNum, pageSize: this.PageSize, ...options })
+    this.http.get(`${this.message.baseUrl}article/articles`, { params: { pageNum: this.pageNum, pageSize: this.PageSize, ...options } })
       .toPromise().then((data: any) => {
         if (data.success === 1) {
           this.data = data.message.data;

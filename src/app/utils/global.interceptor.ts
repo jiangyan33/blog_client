@@ -13,11 +13,9 @@ class GlobalInterceptor implements HttpInterceptor {
         // 请求头信息中添加token信息
         const setHeaders = { 'Content-Type': 'application/json' };
         if (token) {
-            setHeaders['X-Access-Token'] = token;
+            setHeaders['token'] = token;
         }
-        // 服务器请求地址的前缀
-        const baseUrl = 'http://127.0.0.1:8080/api/';
-        const authReq = req.clone({ setHeaders, url: baseUrl + req.url });
+        const authReq = req.clone({ setHeaders });
         return next.handle(authReq);
     }
 }

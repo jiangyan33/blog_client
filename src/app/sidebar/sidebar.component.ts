@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { MessageService } from '../message.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -13,27 +13,23 @@ export class SidebarComponent implements OnInit {
   articleList: any; // 最新文章信息
   dateList: any; // 归档信息
   calendarInfo: any; // 日历信息
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(
+    private http: HttpClient,
+    private message: MessageService
+  ) { }
 
   ngOnInit() {
+    this.categoryList = JSON.parse(window.localStorage.getItem("categoryList"));
 
-    this.http.get('category/categoryList').toPromise().then((data: any) => {
+    this.http.get(`${this.message.baseUrl}article/articles`, { params: { pageNum: "1", pageSize: "5" } }).toPromise().then((data: any) => {
       if (data.success === 1) {
-        this.categoryList = data.message;
+        this.articleList = data.message.data;
       }
     }).catch(err => {
       console.log(err);
     });
 
-    this.http.get('article/articles', { params: { pageNum: "1", pageSize: "5" } }).toPromise().then((data: any) => {
-      if (data.success === 1) {
-        this.articleList = data.message;
-      }
-    }).catch(err => {
-      console.log(err);
-    });
-
-    this.http.get('article/date').toPromise().then((data: any) => {
+    this.http.get(`${this.message.baseUrl}article/date`).toPromise().then((data: any) => {
       if (data.success === 1) {
         this.dateList = data.message;
       }

@@ -3,17 +3,17 @@
     <ul class="nav">
         <li id="menu-item-50"
             class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-50">
-            <a routerLink="/home">首页</a>
+            <a routerLink="/articles">首页</a>
         </li>
         <li id="menu-item-50" *ngFor="let item of categoryList"
             class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-50">
-            <a routerLink="/home" [queryParams]="{categoryId:item.id,value:item.name}">{{item.name}}</a>
+            <a routerLink="/articles" [queryParams]="{categoryId:item.id,value:item.name}">{{item.name}}</a>
         </li>
     </ul>
     <div class="screen-mini"><button data-type="screen-nav" class="btn btn-inverse screen-nav"><i
                 class="icon-tasks icon-white"></i></button></div>
     <div class="menu pull-right">
-        <form class="dropdown search-form" [formGroup]="searchKey" (ngSubmit)="search()">
+        <form class="dropdown search-form" [formGroup]="formData" (ngSubmit)="search()">
             <input class="search-input" type="text" placeholder="输入关键字搜索" x-webkit-speech=""
                 formControlName="searchKey">
             <input class="btn btn-success search-submit" type="submit" value="搜索">
