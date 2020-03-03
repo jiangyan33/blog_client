@@ -3,7 +3,7 @@
         <h3 class="widget_tit">近期文章</h3>
         <ul id="left_new_article">
             <li *ngFor="let item of articleList">
-                <a [routerLink]="['/articles',item.id]">{{item.name}}</a>
+                <a [routerLink]="['/articles/article',item.id]">{{item.name}}</a>
             </li>
         </ul>
     </div>

@@ -1,8 +1,8 @@
 <div class="content" *ngIf="article">
     <!-- <img src="https://gitee.com/xmtblog/img/raw/master/fengxiang.png"> 图片广告位置 -->
     <div class="breadcrumbs">你的位置：
-        <a routerLink="/home">小老板</a><small>&gt;</small>
-        <a routerLink="/home"
+        <a routerLink="/articles">小老板</a><small>&gt;</small>
+        <a routerLink="/articles"
             [queryParams]="{categoryId:article.t_category_id,value:article.t_category_name}">{{article.t_category_name}}</a><small>&gt;</small>
         <span class="muted">{{article.name}}</span>
     </div>
@@ -11,11 +11,12 @@
         <h1 class="article-title">{{article.name}}</h1>
         <div class="meta">
             <span class="muted">
-                <a routerLink="/home" [queryParams]="{categoryId:article.t_category_id,value:article.t_category_name}">
+                <a routerLink="/articles"
+                    [queryParams]="{categoryId:article.t_category_id,value:article.t_category_name}">
                     <i class="icon-list-alt icon12"></i>{{article.t_category_name}}</a>
             </span>
             <span class="muted"><i class="icon-user icon12"></i>
-                <a routerLink="/home"
+                <a routerLink="/articles"
                     [queryParams]="{authorId:article.t_author_id,value:article.t_author_name}">{{article.t_author_name}}</a>
             </span>
             <time class="muted"><i class="ico icon-time icon12"></i>{{article.update_date}}</time>
@@ -35,7 +36,7 @@
     </div> -->
 
     <article class="article-content">
-        <iframe [src]="article.content"></iframe>
+        <app-content [content]="article.content"></app-content>
         <!-- 文章结尾信息 -->
         <!-- <p><img src="https://raw.githubusercontent.com/xmt1139057136/xttblog/master/8fa5dcfcgy1g4em3rzar5j20ib089ae0.jpg"
                 alt="业余草公众号"></p>
@@ -49,22 +50,24 @@
     </article>
     <footer class="article-footer" *ngIf="article.tags.length">
         <div class="article-tags">继续浏览有关
-            <a *ngFor="let item of article.tags" routerLink="/home" [queryParams]="{tagId:item.id,value:item.name}"
+            <a *ngFor="let item of article.tags" routerLink="/articles" [queryParams]="{tagId:item.id,value:item.name}"
                 rel="tag">{{item.name}}</a>
             的文章</div>
         <div class="share">版权声明：本文为博主原创文章，禁止任何转载。</div>
     </footer>
 
     <nav class="article-nav">
-        <span *ngIf="pre" class="article-nav-prev">上一篇 <a routerLink="/article_info" [queryParams]="{id:pre.id}"
-                rel="prev">{{pre.name}}</a></span>
-        <span *ngIf="next" class="article-nav-next"><a routerLink="/article_info" [queryParams]="{id:next.id}"
-                rel="next">{{next.name}}</a> 下一篇</span>
+        <span *ngIf="pre" class="article-nav-prev">上一篇
+            <a [routerLink]="['/articles/article',pre.id]" rel="prev">{{pre.name}}</a>
+        </span>
+        <span *ngIf="next" class="article-nav-next">
+            <a [routerLink]="['/articles/article',next.id]" rel="next">{{next.name}}</a> 下一篇</span>
     </nav>
     <div class="relates" *ngIf="link.length">
         <h3>相关文章推荐</h3>
         <ul>
-            <li *ngFor="let item of link"><a routerLink="/article_info" [queryParams]="{id:item.id}">{{item.name}}</a>
+            <li *ngFor="let item of link">
+                <a [routerLink]="['/articles/article',item.id]">{{item.name}}</a>
             </li>
         </ul>
     </div>

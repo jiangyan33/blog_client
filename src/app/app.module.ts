@@ -10,6 +10,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ArticleInfoComponent } from './article-info/article-info.component';
 import { LayoutComponent } from './layout/layout.component';
 import { httpInterceptorProviders } from './utils/global.interceptor';
+import { ContentComponent } from './content/content.component';
+import { SafeHtmlPipe } from './utils/safe-html.pipe';
 
 @NgModule({
   // 声明该模块使用的组件
@@ -19,7 +21,9 @@ import { httpInterceptorProviders } from './utils/global.interceptor';
     TopbarComponent,
     ArticleListComponent,
     ArticleInfoComponent,
-    LayoutComponent
+    LayoutComponent,
+    ContentComponent,
+    SafeHtmlPipe
   ],
   // 该模块的依赖模块
   imports: [
