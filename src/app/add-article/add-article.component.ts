@@ -35,6 +35,7 @@ export class AddArticleComponent implements OnInit {
           this.content = data.data;
         } else {
           window.alert(data.data);
+          this.content = "";
           this.initFormData();
         }
       }
