@@ -5,7 +5,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 /** http拦截器. */
 @Injectable()
-class GlobalInterceptor implements HttpInterceptor {
+export class GlobalInterceptor implements HttpInterceptor {
 
     intercept(req: HttpRequest<any>, next: HttpHandler):
         Observable<HttpEvent<any>> {
