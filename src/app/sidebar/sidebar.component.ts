@@ -22,16 +22,16 @@ export class SidebarComponent implements OnInit {
     this.categoryList = JSON.parse(window.localStorage.getItem("categoryList"));
 
     this.http.get(`${this.message.baseUrl}article/articles`, { params: { pageNum: "1", pageSize: "5" } }).toPromise().then((data: any) => {
-      if (data.success === 1) {
-        this.articleList = data.message.data;
+      if (data.code === 200) {
+        this.articleList = data.data.data;
       }
     }).catch(err => {
       console.log(err);
     });
 
     this.http.get(`${this.message.baseUrl}article/date`).toPromise().then((data: any) => {
-      if (data.success === 1) {
-        this.dateList = data.message;
+      if (data.code === 200) {
+        this.dateList = data.data;
       }
     }).catch(err => {
       console.log(err);

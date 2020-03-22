@@ -1,0 +1,29 @@
+<div class="limiter">
+    <form action="" [formGroup]="formData">
+        <div>
+            <label>标题</label>
+            <input type="text" placeholder="标题" autocomplete="off" formControlName="title">
+        </div>
+        <div>
+            <label>分类</label>
+            <select formControlName="categoryId">
+                <option *ngFor="let item of categoryList" [value]="item.id">{{item.name}}</option>
+            </select>
+        </div>
+        <div>
+            <label>标签</label>
+            <input type="text" placeholder="标签,使用英文逗号隔开" autocomplete="off" formControlName="tagList">
+        </div>
+        <div>
+            <label>内容</label>
+            <textarea formControlName="content" rows="35" cols="50"></textarea>
+        </div>
+        <div>
+            <button class="btn btn-primary" (click)="add(1)">预览</button> &nbsp;&nbsp;
+            <button class="btn btn-primary" (click)="add(2)">发布</button>
+        </div>
+    </form>
+</div>
+<div class="preview">
+    <app-content [content]="content"></app-content>
+</div>

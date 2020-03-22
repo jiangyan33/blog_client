@@ -17,7 +17,7 @@ export class AppComponent {
     // 初始化分类数据
     if (!window.localStorage.getItem("categoryList")) {
       this.http.get(`${this.message.baseUrl}category/categoryList`).toPromise().then((data: any) => {
-        if (data.success === 1) {
+        if (data.success === 200) {
           window.localStorage.setItem("categoryList", JSON.stringify(data.message));
         }
       });

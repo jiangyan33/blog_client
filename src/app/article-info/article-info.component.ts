@@ -27,11 +27,11 @@ export class ArticleInfoComponent implements OnInit {
       const id = params['params']["id"];
       // 初始化文章列表
       this.http.get(`${this.message.baseUrl}article/article`, { params: { id } }).toPromise().then((data: any) => {
-        if (data.success === 1) {
-          this.article = data.message.article;
-          this.link = data.message.link;
-          this.next = data.message.next;
-          this.pre = data.message.pre;
+        if (data.code === 200) {
+          this.article = data.data.article;
+          this.link = data.data.link;
+          this.next = data.data.next;
+          this.pre = data.data.pre;
         }
       }).catch(e => {
         console.log(e);

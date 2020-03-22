@@ -12,6 +12,8 @@ import { LayoutComponent } from './layout/layout.component';
 import { httpInterceptorProviders } from './utils/global.interceptor';
 import { ContentComponent } from './content/content.component';
 import { SafeHtmlPipe } from './utils/safe-html.pipe';
+import { LoginComponent } from './login/login.component';
+import { AddArticleComponent } from './add-article/add-article.component';
 
 @NgModule({
   // 声明该模块使用的组件
@@ -23,7 +25,9 @@ import { SafeHtmlPipe } from './utils/safe-html.pipe';
     ArticleInfoComponent,
     LayoutComponent,
     ContentComponent,
-    SafeHtmlPipe
+    SafeHtmlPipe,
+    LoginComponent,
+    AddArticleComponent
   ],
   // 该模块的依赖模块
   imports: [
