@@ -46,7 +46,6 @@ export class ArticleListComponent implements OnInit {
     // 初始化文章列表
     this.http.get(`${this.message.baseUrl}article/articles`, { params: { pageNum: this.pageNum, pageSize: this.PageSize, ...options } })
       .toPromise().then((data: any) => {
-        debugger
         if (data.code === 200) {
           this.data = data.data.data;
           this.pages = data.data.pages;
