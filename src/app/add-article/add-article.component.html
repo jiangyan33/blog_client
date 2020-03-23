@@ -2,7 +2,7 @@
     <form action="" [formGroup]="formData">
         <div>
             <label>标题</label>
-            <input type="text" placeholder="标题" autocomplete="off" formControlName="title">
+            <input type="text" placeholder="标题" autocomplete="off" formControlName="name">
         </div>
         <div>
             <label>分类</label>
@@ -15,8 +15,12 @@
             <input type="text" placeholder="标签,使用英文逗号隔开" autocomplete="off" formControlName="tagList">
         </div>
         <div>
+            <label>描述</label>
+            <textarea class="remark" formControlName="remark"></textarea>
+        </div>
+        <div>
             <label>内容</label>
-            <textarea formControlName="content" rows="35" cols="50"></textarea>
+            <textarea class="content" formControlName="content"></textarea>
         </div>
         <div>
             <button class="btn btn-primary" (click)="add(1)">预览</button> &nbsp;&nbsp;

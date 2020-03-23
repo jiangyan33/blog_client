@@ -29,6 +29,8 @@ export class AddArticleComponent implements OnInit {
     // 1预览 2发布
     const url = type === 1 ? 'preView' : 'adminAdd';
     const formData = this.formData.value;
+    if (typeof formData.tagList === 'string')
+      formData.tagList = formData.tagList.split(',');
     this.http.post(`${this.message.baseUrl}article/${url}`, formData).toPromise().then((data: any) => {
       if (data.code === 200) {
         if (type === 1) {
@@ -43,10 +45,11 @@ export class AddArticleComponent implements OnInit {
   }
   initFormData() {
     this.formData = new FormGroup({
-      title: new FormControl(''),
+      name: new FormControl(''),
       content: new FormControl(''),
       categoryId: new FormControl(undefined),
-      tagList: new FormControl([])
+      tagList: new FormControl([]),
+      remark: new FormControl(''),
     });
   }
 }
