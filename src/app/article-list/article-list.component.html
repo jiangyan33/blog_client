@@ -5,13 +5,13 @@
     </header>
     <article class="excerpt excerpt-nothumbnail" *ngFor="let item of data">
         <header>
-            <a class="label label-important">{{item.category_name}}<i class="label-arrow"></i></a>
+            <a class="label label-important">{{item.t_category_name}}<i class="label-arrow"></i></a>
             <h2><a [routerLink]="['/articles/article',item.id]" title="">{{item.name}}</a></h2>
         </header>
         <p>
             <span class="muted"><i class="icon-user icon12"></i>
                 <a routerLink="/articles"
-                    [queryParams]="{authorId:item.t_author_id,value:item.author_name}">{{item.author_name}}</a>
+                    [queryParams]="{authorId:item.t_author_id,value:item.author_name}">{{item.t_author_name}}</a>
             </span>
             <span class="muted"><i class="icon-time icon12"></i> {{item.update_date}}</span>
             <span class="muted"><i class="icon-eye-open icon12"></i>{{item.count}}</span>

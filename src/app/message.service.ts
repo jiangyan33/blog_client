@@ -20,6 +20,7 @@ export class MessageService {
   // 请求服务器地址的前缀
   get baseUrl() {
     return 'http://120.79.185.158/api/';
+    // return 'http://localhost:8080/api/';
   }
 
 }
