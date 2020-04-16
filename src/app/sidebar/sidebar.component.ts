@@ -19,9 +19,9 @@ export class SidebarComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.categoryList = JSON.parse(window.localStorage.getItem("categoryList"));
+    this.categoryList = JSON.parse(window.localStorage.getItem('categoryList'));
 
-    this.http.get(`${this.message.baseUrl}article/articles`, { params: { pageNum: "1", pageSize: "5" } }).toPromise().then((data: any) => {
+    this.http.get(`${this.message.baseUrl}article/articles`, { params: { pageNum: '1', pageSize: '5' } }).toPromise().then((data: any) => {
       if (data.code === 200) {
         this.articleList = data.data.data;
       }

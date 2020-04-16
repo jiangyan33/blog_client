@@ -12,7 +12,7 @@ import { MessageService } from '../message.service';
 export class AddArticleComponent implements OnInit {
 
   categoryList: any; // 分类信息
-  content: string = "";
+  content: string;
 
   formData: FormGroup;
   constructor(
@@ -22,26 +22,27 @@ export class AddArticleComponent implements OnInit {
 
   ngOnInit() {
     this.initFormData();
-    this.categoryList = JSON.parse(window.localStorage.getItem("categoryList"));
+    this.categoryList = JSON.parse(window.localStorage.getItem('categoryList'));
   }
 
   add(type: number) {
     // 1预览 2发布
     const url = type === 1 ? 'preView' : 'adminAdd';
     const formData = this.formData.value;
-    if (typeof formData.tagList === 'string')
+    if (typeof formData.tagList === 'string') {
       formData.tagList = formData.tagList.split(',');
+    }
     this.http.post(`${this.message.baseUrl}article/${url}`, formData).toPromise().then((data: any) => {
       if (data.code === 200) {
         if (type === 1) {
           this.content = data.data;
         } else {
           window.alert(data.data);
-          this.content = "";
+          this.content = '';
           this.initFormData();
         }
       }
-    })
+    });
   }
   initFormData() {
     this.formData = new FormGroup({

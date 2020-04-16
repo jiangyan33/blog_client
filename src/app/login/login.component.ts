@@ -30,9 +30,9 @@ export class LoginComponent implements OnInit {
         // window.localStorage.setItem('userInfo', JSON.stringify(data.user));
         this.router.navigate(['/addArticle']);
       } else {
-        this.errMsg = "用户名或者密码错误";
+        this.errMsg = '用户名或者密码错误';
       }
-    })
+    });
   }
 
 }

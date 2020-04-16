@@ -10,16 +10,16 @@ import { AuthGuard } from './utils/auth.guard';
 
 const routes: Routes = [
   {
-    path: "login",
+    path: 'login',
     component: LoginComponent,
   },
   {
-    path: "addArticle",
+    path: 'addArticle',
     component: AddArticleComponent,
     canActivate: [AuthGuard], // 路由守卫
   },
   {
-    path: "articles",
+    path: 'articles',
     component: LayoutComponent,
     children: [
       {

@@ -11,9 +11,9 @@ export class GlobalInterceptor implements HttpInterceptor {
         Observable<HttpEvent<any>> {
         const token = window.localStorage.getItem('token');
         // 请求头信息中添加token信息
-        const setHeaders = { 'Content-Type': 'application/json' };
+        const setHeaders = { 'Content-Type': 'application/json', token: '' };
         if (token) {
-            setHeaders['token'] = token;
+            setHeaders.token = token;
         }
         const authReq = req.clone({ setHeaders });
         return next.handle(authReq);

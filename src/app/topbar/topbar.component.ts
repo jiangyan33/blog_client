@@ -17,12 +17,12 @@ export class TopbarComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.categoryList = JSON.parse(window.localStorage.getItem("categoryList"));
+    this.categoryList = JSON.parse(window.localStorage.getItem('categoryList'));
     this.categoryList.length = 5;
   }
 
   search() {
-    let formData = this.formData.value;
+    const formData = this.formData.value;
     if (formData.searchKey.trim()) {
       this.router.navigate(['/articles'], { queryParams: formData });
     }

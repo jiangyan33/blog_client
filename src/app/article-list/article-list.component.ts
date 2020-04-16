@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { HttpClient } from "@angular/common/http";
+import { HttpClient } from '@angular/common/http';
 import { MessageService } from '../message.service';
 @Component({
   selector: 'app-article-list',
@@ -8,11 +8,12 @@ import { MessageService } from '../message.service';
   styleUrls: ['./article-list.component.css']
 })
 export class ArticleListComponent implements OnInit {
-  title: String; // 查询对应标题
+  title: string; // 查询对应标题
   pages: number; // 总页数
   data: any; // 数据
-  pageNum: number = 1;
-  PageSize: number = 10;
+  // 类型自动推导出number类型
+  pageNum = 1;
+  PageSize = 10;
   pageCode: string; // 分页标签
   constructor(
     private http: HttpClient,
@@ -22,7 +23,7 @@ export class ArticleListComponent implements OnInit {
 
   ngOnInit() {
     this.route.queryParamMap.subscribe((params: any) => {
-      let options = { ...params.params };
+      const options = { ...params.params };
       if (options.categoryId) {
         this.title = `【${options.value}】分类下的内容`;
       } else if (options.tagId) {
@@ -35,7 +36,7 @@ export class ArticleListComponent implements OnInit {
         this.title = `有关【${options.searchKey}】的内容`;
         options.searchKey = options.searchKey.toUpperCase();
       } else {
-        this.title = "最新发布";
+        this.title = '最新发布';
       }
       Reflect.deleteProperty(options, 'value');
       this.searchArticle(options);
@@ -68,18 +69,18 @@ export class ArticleListComponent implements OnInit {
     let prev = '';
     let next = '';
     if (this.pageNum !== 1) {
-      prev = `<li class="prev-page"><a href="/home?pageNum=${this.pageNum - 1}">上一页</a></li>`
+      prev = `<li class="prev-page"><a href="/home?pageNum=${this.pageNum - 1}">上一页</a></li>`;
     }
     if (this.pageNum !== this.pages) {
-      next = `<li class="next-page"><a href="/home?pageNum=${this.pageNum + 1}">下一页</a></li>`
+      next = `<li class="next-page"><a href="/home?pageNum=${this.pageNum + 1}">下一页</a></li>`;
     }
-    let active = `<li class="active"><span>${this.pageNum}</span></li>`; // 当前页
-    //当前页前
+    const active = `<li class="active"><span>${this.pageNum}</span></li>`; // 当前页
+    // 当前页前
     let activePre = '';
-    //当前页后
+    // 当前页后
     let activeNext = '';
-    //省略号
-    let misc = '<li><span> ... </span></li>';
+    // 省略号
+    const misc = '<li><span> ... </span></li>';
     // 当前页小于等于6且最大页小于等于10
     if (this.pageNum <= 6 && this.pages <= 10) {
       for (let i = 1; i <= this.pageNum; i++) {
@@ -125,11 +126,13 @@ export class ArticleListComponent implements OnInit {
           activePre += `<li><a href="/home?pageNum=${i}">${i}</a></li>`;
         }
       }
-      let length = this.pageNum + 4 < this.pages ? this.pageNum + 4 : this.pages;
+      const length = this.pageNum + 4 < this.pages ? this.pageNum + 4 : this.pages;
       for (let i = this.pageNum + 1; i <= length; i++) {
         activePre += `<li><a href="/home?pageNum=${i}">${i}</a></li>`;
       }
-      this.pageNum + 4 < this.pages ? activeNext += misc : '';
+      if (this.pageNum + 4 < this.pages) {
+        activeNext += misc;
+      }
     }
     return prev + '\n' + activePre + '\n' + activeNext + '\n' + next;
   }

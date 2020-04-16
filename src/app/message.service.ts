@@ -9,10 +9,10 @@ export class MessageService {
     private http: HttpClient
   ) {
     // 初始化分类数据
-    if (!window.localStorage.getItem("categoryList")) {
+    if (!window.localStorage.getItem('categoryList')) {
       this.http.get(`${this.baseUrl}category/categoryList`).toPromise().then((data: any) => {
         if (data.code === 200) {
-          window.localStorage.setItem("categoryList", JSON.stringify(data.data));
+          window.localStorage.setItem('categoryList', JSON.stringify(data.data));
         }
       });
     }

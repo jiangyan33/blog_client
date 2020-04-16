@@ -22,9 +22,9 @@ export class ArticleInfoComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.route.paramMap.subscribe(params => {
+    this.route.paramMap.subscribe((params: any) => {
       console.log(params);
-      const id = params['params']["id"];
+      const id = params.params.id;
       // 初始化文章列表
       this.http.get(`${this.message.baseUrl}article/article`, { params: { id } }).toPromise().then((data: any) => {
         if (data.code === 200) {
@@ -35,7 +35,7 @@ export class ArticleInfoComponent implements OnInit {
         }
       }).catch(e => {
         console.log(e);
-      })
+      });
     });
   }
 
